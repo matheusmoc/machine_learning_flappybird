@@ -157,4 +157,30 @@ class Pipe:
 
 
 class Floor:
+    SPEED = 5
+    WIDTH = FLOOR_IMAGE.get_width()
+    IMAGE = FLOOR_IMAGE
+    
+    def __init__(self, y):
+        self.y = y
+        self.floor0 = 0
+        self.floor1 = self.floor0 + self.WIDTH
+    
+    def move(self):
+        self.floor1 -= self.SPEED
+        self.floor2 -= self.SPEED       
+
+        if self.floor1 + self.WIDTH < 0:
+            self.floor1 = self.floor1 + self.WIDTH
+        if self.floor2 + self.WIDTH < 0:
+            self.floor2 = self.floor2 + self.WIDTH
+        
+    def draw(self, screen):
+        screen.blit(self.IMAGE, (self.floor1, self.y))
+        screen.blit(self.IMAGE, (self.floor2, self.y))
+    
+
+
+def draw_screen(screen, birds, pipes, floor, points, self):
     pass
+    
