@@ -111,8 +111,50 @@ class Bird:
 
 
 class Pipe:
-    pass
+    DISTANCE = 200
+    SPEED = 5
+    
+    def __init__(self, x):
+        self.x = x
+        self.hight = 0
+        self.position_top = 0
+        self.position_base = 0
+        #(x axis and y axis)
+        self.pipe_top = pygame.transform.flip(PIPE_IMAGE, False, True)
+        self.pipe_base = PIPE_IMAGE
+        self.passed = False
+        self.define_hight()
+    
+    def define_hight(self):
+        self.hight = random.randrange(50, 450)
+        self.position_base = self.hight - self.pipe_top.get_height()
+        self.position_base = self.hight + self.DISTANCE
+    
+    def move(self):
+        self.x -= self.SPEED
+    
+    def draw(self, screen):
+        screen.blit(self.pipe_top, (self.x, self.position_top))
+        screen.blit(self.pipe_base, (self.x, self.position_base))
+    
+
+    def collision(self, bird):
+        bird_hitbox = bird.get_mask()
+        top_hitbox  = pygame.mask.from_surface(self.pipe_top)
+        base_hitbox = pygame.mask.from_surface(self.pipe_base)
+
+        distance_top = (self.x - bird.x, self.position_top - round(bird.y))
+        distance_base = (self.x - bird.x, self.position_base - round(bird.y))
+        
+        base_point = bird_hitbox.overlap(base_hitbox, distance_base)
+        top_point = bird_hitbox.overlap(top_hitbox, distance_top)
+
+        if base_point or top_point:
+            return True
+        else:
+            return False
 
 
-class floor:
+
+class Floor:
     pass
