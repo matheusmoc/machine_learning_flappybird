@@ -179,8 +179,20 @@ class Floor:
         screen.blit(self.IMAGE, (self.floor1, self.y))
         screen.blit(self.IMAGE, (self.floor2, self.y))
     
+def draw_screen(screen, birds, pipes, floor, points):
+    screen.blit(BACKGROUND_IMAGE, (0, 0))
+    for bird in birds:       #machine learning in birds 
+        bird.draw(screen) 
+    
+    for pine in pipes:
+        pine.draw(screen)
+
+    texto = FONT_POINTS.render(f"Score: {points}", 1, (255, 255, 255))
+    screen.blit(texto, (WIDTH_SCREEN - 10 - texto.get_width(), 10))
+    floor.draw(screen)
+    pygame.display.update()
 
 
-def draw_screen(screen, birds, pipes, floor, points, self):
-    pass
+
+
     
